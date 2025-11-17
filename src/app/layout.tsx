@@ -4,8 +4,8 @@ import { info } from "@/utils/data/app-info";
 import Footer from "@/components/reusable/footer";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 import Navbar from "@/components/reusable/navbar";
-import "./css/card.scss";
-import "./css/globals.scss";
+import "@/styles/card.scss";
+import "@/styles/globals.scss";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
