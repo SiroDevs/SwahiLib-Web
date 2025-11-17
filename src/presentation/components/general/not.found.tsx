@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/action/button";
 import Link from "next/link";
 
 export function CustomNotFound() {

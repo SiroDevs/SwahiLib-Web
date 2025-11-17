@@ -1,5 +1,5 @@
 "use client";
-import { info } from "@/utils/data/app-info";
+import { info } from "@/utils/data/app.info";
 import Image from "next/image";
 import Link from "next/link";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';

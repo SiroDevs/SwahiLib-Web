@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { osName } from "react-device-detect";
-import { info } from "@/utils/data/app-info";
+import { info } from "@/utils/data/app.info";
 import Image from "next/image";
 import Link from "next/link";
 import { MdDownload } from "react-icons/md";

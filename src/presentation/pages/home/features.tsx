@@ -2,7 +2,7 @@
 
 import { Feature, features } from "@/utils/data/features";
 import { RiApps2AiFill } from "react-icons/ri";
-import GlowCard from "@/components/ui/glow-card";
+import GlowCard from "@/presentation/components/general/glow.card";
 
 export default function Features() {
 

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { info } from "@/utils/data/app-info";
+import { info } from "@/utils/data/app.info";
 import { CgGitFork } from "react-icons/cg";
 import { IoStar } from "react-icons/io5";
 
