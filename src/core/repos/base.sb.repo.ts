@@ -1,5 +1,5 @@
 import { BaseRepo } from '@/core/repos/base.repo';
-import { supabase } from '@/infrastucture/supabase/supabase.client';
+import { supabase } from '@/infrastucture/supabase/client';
 
 export abstract class BaseSbRepo<T> implements BaseRepo<T> {
   constructor(protected tableName: string) {}

@@ -6,7 +6,6 @@ import ScrollToTop from "@/presentation/components/action/scroll.to.top";
 import Navbar from "@/presentation/components/action/navbar";
 import "@/styles/card.scss";
 import "@/styles/globals.scss";
-import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,14 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="text-white">
-          <Navbar />
-          <div className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem]">
-            <Providers>{children}</Providers>
-          </div>
-          <ScrollToTop />
-        </main>
-        <Footer />
+          {children}
       </body>
     </html>
   );
