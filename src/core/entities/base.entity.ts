@@ -1,12 +1,6 @@
 import { Idiom, Proverb, Saying, Word } from ".";
 
 export type EntityType = 'idioms' | 'proverbs' | 'sayings' | 'words';
-export type AnyEntity = Idiom | Proverb | Saying | Word;
+export const entityTypes: EntityType[] = ["idioms", "proverbs", "sayings", "words"];
 
-export type EntityCommonFields = {
-  rid: number;
-  likes: number;
-  views: number;
-  createdAt: Date;
-  updatedAt?: Date;
-};
+export type AnyEntity = Idiom | Proverb | Saying | Word;

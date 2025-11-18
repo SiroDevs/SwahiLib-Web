@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useEntityCrud } from "@/presentation/hooks/use-entity-crud";
-import { AnyEntity, EntityType } from "@/core/entities";
 import { container } from "@/infrastucture/di/container";
-import { EntityTable } from "@/presentation/components/general/entity-table";
 import DashboardNavbar from "@/presentation/components/action/dashboard-navbar";
+import { IdiomTable, ProverbTable } from "@/presentation/components/tables";
+import { SayingTable, WordTable } from "@/presentation/components/tables";
+import { EntityType, AnyEntity, entityTypes } from "@/core/entities";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");
@@ -27,14 +28,49 @@ export default function DashboardPage() {
     }
   };
 
-  const entityTypes: EntityType[] = ["idioms", "proverbs", "sayings", "words"];
+  const renderTable = () => {
+    switch (activeTab) {
+      case "words":
+        return (
+          <WordTable
+            words={entities}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        );
+      case "idioms":
+        return (
+          <IdiomTable
+            idioms={entities}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        );
+      case "proverbs":
+        return (
+          <ProverbTable
+            proverbs={entities}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        );
+      case "sayings":
+        return (
+          <SayingTable
+            sayings={entities}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div>
       <DashboardNavbar />
       <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-
         <div className="flex space-x-4 mb-6">
           {entityTypes.map((tab) => (
             <button
@@ -51,12 +87,7 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <EntityTable
-          entities={entities}
-          entityType={activeTab}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        {renderTable()}
 
         {editingEntity && <div>{/* Implement your edit form here */}</div>}
       </div>
