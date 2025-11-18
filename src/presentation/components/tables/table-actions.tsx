@@ -1,4 +1,5 @@
 import { AlertDialog } from '../dialogs/alert-dialog';
+import { Pencil, Trash2 } from 'lucide-react';
 
 interface TableActionsProps {
   onEdit: () => void;
@@ -8,17 +9,21 @@ interface TableActionsProps {
 
 export function TableActions({ onEdit, onDelete, entityType }: TableActionsProps) {
   return (
-    <div className="space-x-2">
+    <div className="flex space-x-2">
       <button
         onClick={onEdit}
-        className="text-blue-600 hover:text-blue-900 transition-colors"
+        className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-md transition-colors"
+        title={`Edit ${entityType}`}
       >
-        Edit
+        <Pencil size={16} />
       </button>
       <AlertDialog
         trigger={
-          <button className="text-red-600 hover:text-red-900 transition-colors">
-            Delete
+          <button 
+            className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-md transition-colors"
+            title={`Delete ${entityType}`}
+          >
+            <Trash2 size={16} />
           </button>
         }
         title={`Delete ${entityType}`}

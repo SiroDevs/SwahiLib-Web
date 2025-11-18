@@ -6,11 +6,14 @@ import { container } from "@/infrastucture/di/container";
 import DashboardNavbar from "@/presentation/components/action/dashboard-navbar";
 import { IdiomTable, ProverbTable } from "@/presentation/components/tables";
 import { SayingTable, WordTable } from "@/presentation/components/tables";
+import { EditEntityForm } from "@/presentation/components/forms/edit-entity-form";
 import { EntityType, AnyEntity, entityTypes } from "@/core/entities";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");
   const [editingEntity, setEditingEntity] = useState<AnyEntity | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  
   const { entities, deleteEntity, updateEntity } = useEntityCrud(
     container.idiomUseCase,
     activeTab
@@ -26,6 +29,23 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Failed to delete entity:", error);
     }
+  };
+
+  const handleSave = async (updatedEntity: AnyEntity) => {
+    setIsSaving(true);
+    try {
+      // await updateEntity(updatedEntity.rid, updatedEntity);
+      setEditingEntity(null); // Close the form on successful save
+    } catch (error) {
+      console.error("Failed to update entity:", error);
+      // You might want to show an error message to the user here
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingEntity(null);
   };
 
   const renderTable = () => {
@@ -71,15 +91,17 @@ export default function DashboardPage() {
     <div>
       <DashboardNavbar />
       <div className="container mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+
         <div className="flex space-x-4 mb-6">
           {entityTypes.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded ${
+              className={`px-4 py-2 rounded transition-colors ${
                 activeTab === tab
                   ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -89,7 +111,15 @@ export default function DashboardPage() {
 
         {renderTable()}
 
-        {editingEntity && <div>{/* Implement your edit form here */}</div>}
+        {editingEntity && (
+          <EditEntityForm
+            entity={editingEntity}
+            entityType={activeTab}
+            onSave={handleSave}
+            onCancel={handleCancelEdit}
+            isSaving={isSaving}
+          />
+        )}
       </div>
     </div>
   );
