@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { info } from "@/utils/data/app.info";
-import Footer from "@/presentation/components/general/footer";
-import ScrollToTop from "@/presentation/components/action/scroll.to.top";
-import Navbar from "@/presentation/components/action/navbar";
+import { info } from "@/core/utils/data/app.info";
 import "@/styles/card.scss";
 import "@/styles/globals.scss";
 

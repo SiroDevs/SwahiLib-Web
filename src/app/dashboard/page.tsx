@@ -5,26 +5,14 @@ import { useEntityCrud } from "@/presentation/hooks/use-entity-crud";
 import { AnyEntity, EntityType } from "@/core/entities";
 import { container } from "@/infrastucture/di/container";
 import { EntityTable } from "@/presentation/components/general/entity-table";
-import { supabase } from "@/infrastucture/supabase/client";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");
   const [editingEntity, setEditingEntity] = useState<AnyEntity | null>(null);
-  // const [user, setUser] = useState<any>(null);
-
   const { entities, deleteEntity, updateEntity } = useEntityCrud(
     container.idiomUseCase,
     activeTab
   );
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const { data: { user } } = await supabase.auth.getUser();
-  //     setUser(user);
-  //   };
-
-  //   getUser();
-  // }, []);
 
   const handleEdit = (entity: AnyEntity) => {
     setEditingEntity(entity);
@@ -39,14 +27,6 @@ export default function DashboardPage() {
   };
 
   const entityTypes: EntityType[] = ["idioms", "proverbs", "sayings", "words"];
-
-  // if (!user) {
-  //   return (
-  //     <div className="container mx-auto p-6">
-  //       <div className="text-center">Loading...</div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="container mx-auto p-6">

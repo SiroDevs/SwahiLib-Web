@@ -1,7 +1,7 @@
 "use client";
 
-import { AppLink, links } from "@/utils/data/app-links";
-import { info } from "@/utils/data/app.info";
+import { AppLink, links } from "@/core/utils/data/app-links";
+import { info } from "@/core/utils/data/app.info";
 import Image from "next/image";
 import Link from "next/link";
 

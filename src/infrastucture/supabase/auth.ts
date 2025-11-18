@@ -1,4 +1,3 @@
-// import { createClient } from './supabase/server';
 import { supabase } from '@/infrastucture/supabase/client';
 import { redirect } from 'next/navigation';
 

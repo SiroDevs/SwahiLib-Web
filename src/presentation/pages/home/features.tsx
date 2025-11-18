@@ -1,6 +1,6 @@
 "use client";
 
-import { Feature, features } from "@/utils/data/features";
+import { Feature, features } from "@/core/utils/data/features";
 import { RiApps2AiFill } from "react-icons/ri";
 import GlowCard from "@/presentation/components/general/glow.card";
 

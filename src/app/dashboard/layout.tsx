@@ -1,11 +1,21 @@
-import { requireAuth } from "@/infrastucture/supabase/auth";
+"use client";
 
-export default async function DashboardLayout({
+import { useAuthStore } from "@/infrastucture/state/auth";
+import { Providers } from "./providers";
+import { useRouter } from "next/navigation";
+
+export default function DashboardLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  await requireAuth();
+}>) {
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+  
+  if (!isAuthenticated) {
+    router.push("/login");
+    return null;
+  }
 
   return (
     <div>
@@ -28,7 +38,7 @@ export default async function DashboardLayout({
           </div>
         </div>
       </nav>
-      {children}
+      <Providers>{children}</Providers>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { info } from "@/utils/data/app.info";
-import { PrivacyText, texts } from "@/utils/data/privacy-texts";
+import { info } from "@/core/utils/data/app.info";
+import { PrivacyText, texts } from "@/core/utils/data/privacy-texts";
 
 export default function PrivacyPolicy() {
   return (
