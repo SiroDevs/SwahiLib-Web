@@ -1,5 +1,5 @@
 import { checkAuth } from "@/infrastucture/supabase/auth";
-import AuthLayoutClient from "@/presentation/components/clients/auth-layout";
+import AuthLayoutClient from "./client";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({
