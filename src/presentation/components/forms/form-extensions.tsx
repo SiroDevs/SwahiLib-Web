@@ -54,7 +54,7 @@ export function CommonFields({
     <>
       <BaseInput
         id="title"
-        label={entityName}
+        label={`The ${entityName}`}
         value={title}
         onChange={(e) => onChange('title', e.target.value)}
         error={errors.title}
@@ -63,7 +63,7 @@ export function CommonFields({
       />
       <Textarea
         id="meaning"
-        label="Meaning"
+        label={`Meaning of the ${entityName}`}
         value={meaning}
         onChange={(e) => onChange('meaning', e.target.value)}
         rows={3}
@@ -85,7 +85,7 @@ export function EnglishField({ english, error, onChange }: EnglishFieldProps) {
   return (
     <BaseInput
       id="english"
-      label="English Translation"
+      label="English translation"
       value={english}
       onChange={(e) => onChange(e.target.value)}
       error={error}

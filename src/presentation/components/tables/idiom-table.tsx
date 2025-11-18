@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../general/loading';
 import { TableContainer } from './table-container';
 import { TableHeader, TableRow, TableCell } from './table-parts';
 import { TableActions } from './table-actions';
+import { formatDateTime } from '@/core/utils/helpers/utils';
 
 interface IdiomTableProps {
   idioms: Idiom[];
@@ -32,7 +33,7 @@ export function IdiomTable({ idioms, onEdit, onDelete, isLoading = false }: Idio
               <TableCell className="font-medium">{idiom.title || '-'}</TableCell>
               <TableCell className="max-w-md truncate">{idiom.meaning || '-'}</TableCell>
               <TableCell className="whitespace-nowrap">
-                {idiom.updatedAt ? new Date(idiom.updatedAt).toLocaleDateString() : '-'}
+                {idiom.updatedAt ? formatDateTime(idiom.updatedAt, { useNumericFormat: true }) : '-'}
               </TableCell>
               <TableCell>
                 <TableActions

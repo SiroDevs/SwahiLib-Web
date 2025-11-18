@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../general/loading';
 import { TableActions } from './table-actions';
 import { TableContainer } from './table-container';
 import { TableHeader, TableRow, TableCell } from './table-parts';
+import { formatDateTime } from '@/core/utils/helpers/utils';
 
 interface WordTableProps {
   words: Word[];
@@ -34,8 +35,8 @@ export function WordTable({ words, onEdit, onDelete, isLoading = false }: WordTa
               <TableCell className="max-w-sm truncate">{word.synonyms || '-'}</TableCell>
               <TableCell className="max-w-sm truncate">{word.conjugation || '-'}</TableCell>
               <TableCell>{word.english || '-'}</TableCell>
-              <TableCell className="whitespace-nowrap">
-                {word.updatedAt ? new Date(word.updatedAt).toLocaleDateString() : '-'}
+              <TableCell>
+                {word.updatedAt ? formatDateTime(word.updatedAt, { useNumericFormat: true }) : '-'}
               </TableCell>
               <TableCell>
                 <TableActions

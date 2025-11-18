@@ -13,7 +13,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");
   const [editingEntity, setEditingEntity] = useState<AnyEntity | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  
+
   const { entities, deleteEntity, updateEntity } = useEntityCrud(
     container.idiomUseCase,
     activeTab
@@ -34,11 +34,13 @@ export default function DashboardPage() {
   const handleSave = async (updatedEntity: AnyEntity) => {
     setIsSaving(true);
     try {
-      // await updateEntity(updatedEntity.rid, updatedEntity);
-      setEditingEntity(null); // Close the form on successful save
+      await updateEntity({
+        id: updatedEntity.rid,
+        data: updatedEntity,
+      });
+      setEditingEntity(null);
     } catch (error) {
       console.error("Failed to update entity:", error);
-      // You might want to show an error message to the user here
     } finally {
       setIsSaving(false);
     }

@@ -1,3 +1,5 @@
+import { formatDateTime } from "@/core/utils/helpers/utils";
+
 interface StatsSectionProps {
   likes: number;
   views: number;
@@ -7,22 +9,14 @@ interface StatsSectionProps {
 
 export function StatsSection({ likes, views, createdAt, updatedAt }: StatsSectionProps) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t">
-      <ReadOnlyField 
-        label="Likes" 
-        value={likes} 
-      />
-      <ReadOnlyField 
-        label="Views" 
-        value={views} 
-      />
+    <div className="grid grid-cols-2 md:grid-cols-2 gap-2 pt-4 border-t">
       <ReadOnlyField 
         label="Created" 
-        value={new Date(createdAt).toLocaleDateString()} 
+        value={formatDateTime(createdAt)} 
       />
       <ReadOnlyField 
         label="Last Updated" 
-        value={updatedAt ? new Date(updatedAt).toLocaleDateString() : "Never"} 
+        value={updatedAt ? formatDateTime(updatedAt) : "Never"} 
       />
     </div>
   );

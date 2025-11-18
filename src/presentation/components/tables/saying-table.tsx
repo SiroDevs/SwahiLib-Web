@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../general/loading';
 import { TableActions } from './table-actions';
 import { TableContainer } from './table-container';
 import { TableHeader, TableRow, TableCell } from './table-parts';
+import { formatDateTime } from '@/core/utils/helpers/utils';
 
 interface SayingTableProps {
   sayings: Saying[];
@@ -32,7 +33,7 @@ export function SayingTable({ sayings, onEdit, onDelete, isLoading = false }: Sa
               <TableCell className="font-medium">{saying.title || '-'}</TableCell>
               <TableCell className="max-w-md truncate">{saying.meaning || '-'}</TableCell>
               <TableCell className="whitespace-nowrap">
-                {saying.updatedAt ? new Date(saying.updatedAt).toLocaleDateString() : '-'}
+                {saying.updatedAt ? formatDateTime(saying.updatedAt, { useNumericFormat: true }) : '-'}
               </TableCell>
               <TableCell>
                 <TableActions

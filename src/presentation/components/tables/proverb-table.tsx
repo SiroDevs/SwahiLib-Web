@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../general/loading';
 import { TableActions } from './table-actions';
 import { TableContainer } from './table-container';
 import { TableHeader, TableRow, TableCell } from './table-parts';
+import { formatDateTime } from '@/core/utils/helpers/utils';
 
 interface ProverbTableProps {
   proverbs: Proverb[];
@@ -34,7 +35,7 @@ export function ProverbTable({ proverbs, onEdit, onDelete, isLoading = false }: 
               <TableCell className="max-w-sm truncate">{proverb.synonyms || '-'}</TableCell>
               <TableCell className="max-w-sm truncate">{proverb.conjugation || '-'}</TableCell>
               <TableCell className="whitespace-nowrap">
-                {proverb.updatedAt ? new Date(proverb.updatedAt).toLocaleDateString() : '-'}
+                {proverb.updatedAt ? formatDateTime(proverb.updatedAt, { useNumericFormat: true }) : '-'}
               </TableCell>
               <TableCell>
                 <TableActions
