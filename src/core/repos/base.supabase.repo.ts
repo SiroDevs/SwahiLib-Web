@@ -1,17 +1,55 @@
 import { BaseRepo } from '@/core/repos/base.repo';
 import { supabase } from '@/infrastucture/supabase/client';
 
-export abstract class BaseSbRepo<T> implements BaseRepo<T> {
+export interface PaginationOptions {
+  page: number;
+  pageSize: number;
+}
+
+export interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export abstract class BaseSupabaseRepo<T> implements BaseRepo<T> {
   constructor(protected tableName: string) {}
 
   async getAll(): Promise<T[]> {
     const { data, error } = await supabase
       .from(this.tableName)
       .select('*')
-      .order('createdAt', { ascending: false });
+      .order('title', { ascending: false });
 
     if (error) throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
     return data as T[];
+  }
+
+  async getAllPaginated(options: PaginationOptions): Promise<PaginatedResult<T>> {
+    const { page, pageSize } = options;
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
+    const { data, error, count } = await supabase
+      .from(this.tableName)
+      .select('*', { count: 'exact' })
+      .order('title', { ascending: false })
+      .range(from, to);
+
+    if (error) throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
+
+    const total = count || 0;
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      data: data as T[],
+      total,
+      page,
+      pageSize,
+      totalPages,
+    };
   }
 
   async getById(id: number): Promise<T | null> {

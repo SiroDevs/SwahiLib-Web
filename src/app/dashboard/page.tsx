@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useEntityCrud } from "@/presentation/hooks/use-entity-crud";
+import { usePaginatedEntity } from "@/presentation/hooks/use-paginated-entity";
 import { container } from "@/infrastucture/di/container";
 import DashboardNavbar from "@/presentation/components/action/dashboard-navbar";
 import { IdiomTable, ProverbTable } from "@/presentation/components/tables";
@@ -9,15 +9,42 @@ import { SayingTable, WordTable } from "@/presentation/components/tables";
 import { EditEntityForm } from "@/presentation/components/forms/edit-entity-form";
 import { EntityType, AnyEntity, entityTypes } from "@/core/entities";
 
+const PAGE_SIZE = 10;
+
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");
+  const [currentPage, setCurrentPage] = useState(1);
   const [editingEntity, setEditingEntity] = useState<AnyEntity | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  const { entities, deleteEntity, updateEntity } = useEntityCrud(
-    container.idiomUseCase,
-    activeTab
+  const { 
+    entities, 
+    pagination, 
+    deleteEntity, 
+    updateEntity, 
+    isLoading,
+    isFetching 
+  } = usePaginatedEntity(
+    getUseCase(activeTab),
+    activeTab,
+    { page: currentPage, pageSize: PAGE_SIZE }
   );
+
+  // Helper function to get the appropriate use case based on entity type
+  function getUseCase(entityType: EntityType) {
+    switch (entityType) {
+      case "words":
+        return container.wordUseCase;
+      case "idioms":
+        return container.idiomUseCase;
+      case "proverbs":
+        return container.proverbUseCase;
+      case "sayings":
+        return container.sayingUseCase;
+      default:
+        return container.idiomUseCase;
+    }
+  }
 
   const handleEdit = (entity: AnyEntity) => {
     setEditingEntity(entity);
@@ -26,6 +53,10 @@ export default function DashboardPage() {
   const handleDelete = async (id: number) => {
     try {
       await deleteEntity(id);
+      // If we're on a page that becomes empty after deletion, go to previous page
+      if (entities.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
     } catch (error) {
       console.error("Failed to delete entity:", error);
     }
@@ -50,7 +81,26 @@ export default function DashboardPage() {
     setEditingEntity(null);
   };
 
+  const handleTabChange = (tab: EntityType) => {
+    setActiveTab(tab);
+    setCurrentPage(1); // Reset to first page when changing tabs
+    setEditingEntity(null);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   const renderTable = () => {
+    const commonProps = {
+      isLoading: isLoading || isFetching,
+      currentPage,
+      totalPages: pagination.totalPages,
+      totalItems: pagination.total,
+      pageSize: PAGE_SIZE,
+      onPageChange: handlePageChange,
+    };
+
     switch (activeTab) {
       case "words":
         return (
@@ -58,6 +108,7 @@ export default function DashboardPage() {
             words={entities}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            {...commonProps}
           />
         );
       case "idioms":
@@ -66,6 +117,7 @@ export default function DashboardPage() {
             idioms={entities}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            {...commonProps}
           />
         );
       case "proverbs":
@@ -74,6 +126,7 @@ export default function DashboardPage() {
             proverbs={entities}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            {...commonProps}
           />
         );
       case "sayings":
@@ -82,6 +135,7 @@ export default function DashboardPage() {
             sayings={entities}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            {...commonProps}
           />
         );
       default:
@@ -99,7 +153,7 @@ export default function DashboardPage() {
           {entityTypes.map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               className={`px-4 py-2 rounded transition-colors ${
                 activeTab === tab
                   ? "bg-blue-600 text-white"

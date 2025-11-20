@@ -1,9 +1,9 @@
 import { BaseRepo } from '@/core/repos/base.repo';
-import { BaseSbRepo } from './base.sb.repo';
+import { BaseSupabaseRepo } from './base.supabase.repo';
 import { Saying } from '@/core/entities/saying.entity';
 
-export class SayingSbRepo 
-  extends BaseSbRepo<Saying> 
+export class SayingSupabaseRepo 
+  extends BaseSupabaseRepo<Saying> 
   implements BaseRepo<Saying> {
   constructor() {
     super('sayings');

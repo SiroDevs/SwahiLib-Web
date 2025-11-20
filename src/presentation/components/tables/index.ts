@@ -1,4 +1,5 @@
 export * from "./idiom-table";
+export * from "./pagination";
 export * from "./proverb-table";
 export * from "./saying-table";
 export * from "./table-actions";

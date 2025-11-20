@@ -1,3 +1,4 @@
+// presentation/hooks/use-entity-crud.ts
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CrudUseCase } from '@/core/usecases/crud.usecase';
 import { EntityType } from '@/core/entities';
