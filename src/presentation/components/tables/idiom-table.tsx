@@ -1,20 +1,19 @@
-'use client';
+"use client";
 
-import { Idiom } from '@/core/entities';
-import { EmptyState } from '../general/empty-state';
-import { LoadingSpinner } from '../general/loading';
-import { TableContainer } from './table-container';
-import { TableHeader, TableRow, TableCell } from './table-parts';
-import { TableActions } from './table-actions';
-import { formatDateTime } from '@/core/utils/helpers/utils';
-import { Pagination } from './pagination';
+import { Idiom } from "@/core/entities";
+import { EmptyState } from "../general/empty-state";
+import { LoadingSpinner } from "../general/loading";
+import { TableContainer } from "./table-container";
+import { TableHeader, TableRow, TableCell } from "./table-parts";
+import { TableActions } from "./table-actions";
+import { formatDateTime } from "@/core/utils/helpers/utils";
+import { Pagination } from "./pagination";
 
 interface IdiomTableProps {
   idioms: Idiom[];
   onEdit: (idiom: Idiom) => void;
   onDelete: (id: number) => void;
   isLoading?: boolean;
-  // Pagination props
   currentPage: number;
   totalPages: number;
   totalItems: number;
@@ -22,13 +21,13 @@ interface IdiomTableProps {
   onPageChange: (page: number) => void;
 }
 
-const COLUMNS = ['ID', 'Idiom', 'Meaning', 'Updated', 'Actions'];
-const COLUMN_WIDTHS = ['w-16', '', 'max-w-md', 'w-32', 'w-32'];
+const COLUMNS = ["ID", "Idiom", "Meaning", "Updated", "Actions"];
+const COLUMN_WIDTHS = ["w-16", "", "max-w-md", "w-32", "w-32"];
 
-export function IdiomTable({ 
-  idioms, 
-  onEdit, 
-  onDelete, 
+export function IdiomTable({
+  idioms,
+  onEdit,
+  onDelete,
   isLoading = false,
   currentPage,
   totalPages,
@@ -37,7 +36,7 @@ export function IdiomTable({
   onPageChange,
 }: IdiomTableProps) {
   if (isLoading) return <LoadingSpinner />;
-  
+
   return (
     <div className="bg-white shadow rounded-lg">
       <TableContainer>
@@ -54,10 +53,18 @@ export function IdiomTable({
               idioms.map((idiom) => (
                 <TableRow key={idiom.rid}>
                   <TableCell>{idiom.rid}</TableCell>
-                  <TableCell className="font-medium">{idiom.title || '-'}</TableCell>
-                  <TableCell className="max-w-md truncate">{idiom.meaning || '-'}</TableCell>
+                  <TableCell className="font-medium">
+                    {idiom.title || "-"}
+                  </TableCell>
+                  <TableCell className="max-w-md truncate">
+                    {idiom.meaning || "-"}
+                  </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    {idiom.updatedAt ? formatDateTime(idiom.updatedAt, { useNumericFormat: true }) : '-'}
+                    {idiom.updatedAt
+                      ? formatDateTime(idiom.updatedAt, {
+                          useNumericFormat: true,
+                        })
+                      : "-"}
                   </TableCell>
                   <TableCell>
                     <TableActions
@@ -72,8 +79,7 @@ export function IdiomTable({
           </tbody>
         </table>
       </TableContainer>
-      
-      {/* Pagination */}
+
       {idioms.length > 0 && (
         <Pagination
           currentPage={currentPage}

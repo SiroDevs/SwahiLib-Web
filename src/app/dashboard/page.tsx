@@ -30,7 +30,6 @@ export default function DashboardPage() {
     { page: currentPage, pageSize: PAGE_SIZE }
   );
 
-  // Helper function to get the appropriate use case based on entity type
   function getUseCase(entityType: EntityType) {
     switch (entityType) {
       case "words":
@@ -53,7 +52,6 @@ export default function DashboardPage() {
   const handleDelete = async (id: number) => {
     try {
       await deleteEntity(id);
-      // If we're on a page that becomes empty after deletion, go to previous page
       if (entities.length === 1 && currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
@@ -83,7 +81,7 @@ export default function DashboardPage() {
 
   const handleTabChange = (tab: EntityType) => {
     setActiveTab(tab);
-    setCurrentPage(1); // Reset to first page when changing tabs
+    setCurrentPage(1);
     setEditingEntity(null);
   };
 
@@ -146,10 +144,8 @@ export default function DashboardPage() {
   return (
     <div>
       <DashboardNavbar />
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-
-        <div className="flex space-x-4 mb-6">
+      <div className="container mx-auto p-2">
+        <div className="flex space-x-4 mb-2">
           {entityTypes.map((tab) => (
             <button
               key={tab}
