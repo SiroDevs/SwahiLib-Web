@@ -21,7 +21,7 @@ export abstract class BaseSupabaseRepo<T> implements BaseRepo<T> {
     const { data, error } = await supabase
       .from(this.tableName)
       .select('*')
-      .order('title', { ascending: false });
+      .order('rid', { ascending: true });
 
     if (error) throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
     return data as T[];
@@ -35,7 +35,7 @@ export abstract class BaseSupabaseRepo<T> implements BaseRepo<T> {
     const { data, error, count } = await supabase
       .from(this.tableName)
       .select('*', { count: 'exact' })
-      .order('title', { ascending: false })
+      .order('rid', { ascending: true })
       .range(from, to);
 
     if (error) throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
