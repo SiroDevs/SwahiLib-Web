@@ -1,6 +1,6 @@
 {
-  "name": "songlibapp",
-  "version": "0.1.0",
+  "name": "swahilib-web",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -12,10 +12,15 @@
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.81.1",
+    "@tanstack/react-query": "^5.90.10",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^12.4.7",
     "lottie-react": "^2.4.1",
+    "lucide-react": "^0.554.0",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-device-detect": "^2.2.3",
@@ -23,7 +28,8 @@
     "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.4.0",
     "tailwind-merge": "^2.2.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
