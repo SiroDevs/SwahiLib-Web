@@ -55,3 +55,21 @@ export function FormActions({
     </div>
   );
 }
+
+interface ReadOnlyFieldProps {
+  label: string;
+  value: React.ReactNode;
+}
+
+export function ReadOnlyField({ label, value }: ReadOnlyFieldProps) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        {label}
+      </label>
+      <div className="px-3 py-2 bg-gray-50 rounded-md text-gray-700">
+        {value}
+      </div>
+    </div>
+  );
+}

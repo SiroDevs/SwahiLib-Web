@@ -75,7 +75,7 @@ export default function DashboardPage() {
     }
   };
 
-  const handleCancelEdit = () => {
+  const handleCancel = () => {
     setEditingEntity(null);
   };
 
@@ -168,7 +168,7 @@ export default function DashboardPage() {
             entity={editingEntity}
             entityType={activeTab}
             onSave={handleSave}
-            onCancel={handleCancelEdit}
+            onCancel={handleCancel}
             isSaving={isSaving}
           />
         )}

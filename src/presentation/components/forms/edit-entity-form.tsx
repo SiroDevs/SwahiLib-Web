@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { AnyEntity, EntityType, Word, Proverb } from "@/core/entities";
-import { FormHeader, FormActions } from "./form-parts";
-import { StatsSection } from "./form-stats";
+import { FormHeader, FormActions, ReadOnlyField } from "./form-parts";
 import { CommonFields, EnglishField, ExtendedFields } from "./form-extensions";
+import { formatDateTime } from "@/core/utils/helpers/utils";
 
 interface EditEntityFormProps {
   entity: AnyEntity;
@@ -47,16 +47,13 @@ export function EditEntityForm({
       newErrors.meaning = "Meaning is required";
     }
 
-    // if (entityType === "words" && !formData.english?.trim()) {
-    //   newErrors.english = "English translation is required for words";
-    // }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submitted"); // Debug log
 
     if (!validateForm()) {
       return;
@@ -69,8 +66,33 @@ export function EditEntityForm({
     }
   };
 
+  const handleSave = () => {
+    if (validateForm()) {
+      onSave({ ...entity, ...formData }).catch(error => {
+        console.error("Failed to save entity:", error);
+      });
+    }
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onCancel();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onCancel]);
+
   const getEntityDisplayName = (type: EntityType): string => {
-    return type.slice(0, -1); // Remove 's' from plural
+    return type.slice(0, -1);
   };
 
   const entityName = getEntityDisplayName(entityType);
@@ -78,7 +100,10 @@ export function EditEntityForm({
   const hasEnglishField = entityType === "words";
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      onClick={handleBackdropClick}
+    >
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <FormHeader title={`Edit ${entityName}`} onClose={onCancel} />
 
@@ -107,17 +132,23 @@ export function EditEntityForm({
               onChange={(value) => handleChange("english", value)}
             />
           )}
-
-          <StatsSection
-            likes={entity.likes}
-            views={entity.views}
-            createdAt={entity.createdAt}
-            updatedAt={entity.updatedAt}
-          />
+          
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-2 pt-4 border-t">
+            <ReadOnlyField
+              label="Created"
+              value={formatDateTime(entity.createdAt)}
+            />
+            <ReadOnlyField
+              label="Last Updated"
+              value={
+                entity.updatedAt ? formatDateTime(entity.updatedAt) : "Never"
+              }
+            />
+          </div>
 
           <FormActions
             onCancel={onCancel}
-            onSave={() => handleSubmit}
+            onSave={handleSave}
             isSaving={isSaving}
           />
         </form>
