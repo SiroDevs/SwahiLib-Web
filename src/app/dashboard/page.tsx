@@ -9,7 +9,7 @@ import { SayingTable, WordTable } from "@/presentation/components/tables";
 import { EditEntityForm } from "@/presentation/components/forms/edit-entity-form";
 import { EntityType, AnyEntity, entityTypes } from "@/core/entities";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 15;
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<EntityType>("idioms");

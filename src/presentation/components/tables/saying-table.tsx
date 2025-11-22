@@ -36,6 +36,13 @@ export function SayingTable({
   onPageChange,
 }: SayingTableProps) {
   if (isLoading) return <LoadingSpinner />;
+  const handleRowClick = (saying: Saying, event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
+      return;
+    }
+    onEdit(saying);
+  };
 
   return (
     <div className="bg-white shadow rounded-lg">
@@ -51,7 +58,10 @@ export function SayingTable({
               </tr>
             ) : (
               sayings.map((saying) => (
-                <TableRow key={saying.rid}>
+                <TableRow
+                  key={saying.rid}
+                  onClick={(e) => handleRowClick(saying, e)}
+                >
                   <TableCell>{saying.rid}</TableCell>
                   <TableCell className="font-medium">
                     {saying.title || "-"}

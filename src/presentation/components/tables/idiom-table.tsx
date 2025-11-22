@@ -36,6 +36,13 @@ export function IdiomTable({
   onPageChange,
 }: IdiomTableProps) {
   if (isLoading) return <LoadingSpinner />;
+  const handleRowClick = (idiom: Idiom, event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
+      return;
+    }
+    onEdit(idiom);
+  };
 
   return (
     <div className="bg-white shadow rounded-lg">
@@ -51,7 +58,10 @@ export function IdiomTable({
               </tr>
             ) : (
               idioms.map((idiom) => (
-                <TableRow key={idiom.rid}>
+                <TableRow
+                  key={idiom.rid}
+                  onClick={(e) => handleRowClick(idiom, e)}
+                >
                   <TableCell>{idiom.rid}</TableCell>
                   <TableCell className="font-medium">
                     {idiom.title || "-"}
