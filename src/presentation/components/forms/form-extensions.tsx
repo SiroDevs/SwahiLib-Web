@@ -14,7 +14,7 @@ export function ExtendedFields({
   onChange 
 }: ExtendedFieldsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <>
       <BaseInput
         id="synonyms"
         label="Synonyms"
@@ -23,15 +23,17 @@ export function ExtendedFields({
         error={errors.synonyms}
         placeholder="Enter synonyms (comma separated)..."
       />
-      <BaseInput
-        id="conjugation"
-        label="Conjugation"
+      <Textarea
+        id="meaning"
+        label={`Elaborate on the proverb`}
         value={conjugation}
         onChange={(e) => onChange('conjugation', e.target.value)}
+        rows={3}
         error={errors.conjugation}
-        placeholder="Enter conjugation..."
+        required
+        placeholder="Enter elaboration ..."
       />
-    </div>
+    </>
   );
 }
 
@@ -66,7 +68,7 @@ export function CommonFields({
         label={`Meaning of the ${entityName}`}
         value={meaning}
         onChange={(e) => onChange('meaning', e.target.value)}
-        rows={3}
+        rows={5}
         error={errors.meaning}
         required
         placeholder="Enter meaning..."

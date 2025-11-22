@@ -54,6 +54,13 @@ export function WordTable({
   onPageChange,
 }: WordTableProps) {
   if (isLoading) return <LoadingSpinner />;
+  const handleRowClick = (word: Word, event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
+      return;
+    }
+    onEdit(word);
+  };
 
   return (
     <div className="bg-white shadow rounded-lg">
@@ -69,7 +76,10 @@ export function WordTable({
               </tr>
             ) : (
               words.map((word) => (
-                <TableRow key={word.rid}>
+                <TableRow
+                  key={word.rid}
+                  onClick={(e) => handleRowClick(word, e)}
+                >
                   <TableCell>{word.rid}</TableCell>
                   <TableCell className="font-medium">
                     {word.title || "-"}

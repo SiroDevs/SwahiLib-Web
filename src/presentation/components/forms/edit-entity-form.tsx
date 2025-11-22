@@ -53,7 +53,7 @@ export function EditEntityForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted"); // Debug log
+    console.log("Form submitted");
 
     if (!validateForm()) {
       return;

@@ -24,11 +24,16 @@ export function TableHeader({ columns, columnWidths = [] }: TableHeaderProps) {
 
 interface TableRowProps {
   children: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLTableRowElement>) => void;
+  className?: string;
 }
 
-export function TableRow({ children }: TableRowProps) {
+export function TableRow({ children, onClick, className = "" }: TableRowProps) {
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
+    <tr 
+      className={`hover:bg-gray-50 transition-colors ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </tr>
   );

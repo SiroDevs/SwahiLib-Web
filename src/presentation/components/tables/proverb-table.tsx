@@ -21,24 +21,8 @@ interface ProverbTableProps {
   onPageChange: (page: number) => void;
 }
 
-const COLUMNS = [
-  "ID",
-  "Proverb",
-  "Meaning",
-  "Synonyms",
-  "Conjugation",
-  "Updated",
-  "Actions",
-];
-const COLUMN_WIDTHS = [
-  "w-16",
-  "",
-  "max-w-md",
-  "max-w-sm",
-  "max-w-sm",
-  "w-32",
-  "w-32",
-];
+const COLUMNS = ["ID", "Proverb", "Meaning", "Synonyms", "Updated", "Actions"];
+const COLUMN_WIDTHS = ["w-16", "", "max-w-md", "max-w-sm", "w-32", "w-32"];
 
 export function ProverbTable({
   proverbs,
@@ -52,6 +36,13 @@ export function ProverbTable({
   onPageChange,
 }: ProverbTableProps) {
   if (isLoading) return <LoadingSpinner />;
+  const handleRowClick = (proverb: Proverb, event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
+      return;
+    }
+    onEdit(proverb);
+  };
 
   return (
     <div className="bg-white shadow rounded-lg">
@@ -67,7 +58,10 @@ export function ProverbTable({
               </tr>
             ) : (
               proverbs.map((proverb) => (
-                <TableRow key={proverb.rid}>
+                <TableRow
+                  key={proverb.rid}
+                  onClick={(e) => handleRowClick(proverb, e)}
+                >
                   <TableCell>{proverb.rid}</TableCell>
                   <TableCell className="font-medium">
                     {proverb.title || "-"}
@@ -77,9 +71,6 @@ export function ProverbTable({
                   </TableCell>
                   <TableCell className="max-w-sm truncate">
                     {proverb.synonyms || "-"}
-                  </TableCell>
-                  <TableCell className="max-w-sm truncate">
-                    {proverb.conjugation || "-"}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
                     {proverb.updatedAt

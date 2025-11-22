@@ -6,12 +6,14 @@ import { SubmitButton } from "@/presentation/components/action/submit-button";
 import { ErrorAlert } from "@/presentation/components/general/error-alert";
 import { InputField, PasswordInput } from "@/presentation/components/inputs";
 import { useAuthStore } from "@/infrastucture/state/auth";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const { setLoginState } = useAuthStore();
 
@@ -26,7 +28,8 @@ export function LoginForm() {
         setError(result.error.message);
       } else {
         await setLoginState(result.data.user);
-        window.location.href = "/dashboard";
+        router.push("/dashboard");
+        router.refresh();
       }
     } catch (err) {
       setError("An unexpected error occurred");
