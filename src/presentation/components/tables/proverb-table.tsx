@@ -21,8 +21,8 @@ interface ProverbTableProps {
   onPageChange: (page: number) => void;
 }
 
-const COLUMNS = ["ID", "Proverb", "Meaning", "Synonyms", "Updated", "Actions"];
-const COLUMN_WIDTHS = ["w-16", "", "max-w-md", "max-w-sm", "w-32", "w-32"];
+const COLUMNS = ["ID", "Proverb", "Meaning",  "Updated", "Actions"];
+const COLUMN_WIDTHS = ["w-16", "", "max-w-md", "w-32", "w-32"];
 
 export function ProverbTable({
   proverbs,
@@ -68,9 +68,6 @@ export function ProverbTable({
                   </TableCell>
                   <TableCell className="max-w-md truncate">
                     {proverb.meaning || "-"}
-                  </TableCell>
-                  <TableCell className="max-w-sm truncate">
-                    {proverb.synonyms || "-"}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
                     {proverb.updatedAt
