@@ -24,20 +24,20 @@ interface WordTableProps {
 const COLUMNS = [
   "ID",
   "Word",
+  "English",
   "Meaning",
   "Synonyms",
   "Conjugation",
-  "English",
   "Updated",
   "Actions",
 ];
 const COLUMN_WIDTHS = [
   "w-16",
   "",
+  "",
   "max-w-md",
   "max-w-sm",
   "max-w-sm",
-  "",
   "w-32",
   "w-32",
 ];
@@ -84,6 +84,7 @@ export function WordTable({
                   <TableCell className="font-medium">
                     {word.title || "-"}
                   </TableCell>
+                  <TableCell>{word.english || "-"}</TableCell>
                   <TableCell className="max-w-md truncate">
                     {word.meaning || "-"}
                   </TableCell>
@@ -93,7 +94,6 @@ export function WordTable({
                   <TableCell className="max-w-sm truncate">
                     {word.conjugation || "-"}
                   </TableCell>
-                  <TableCell>{word.english || "-"}</TableCell>
                   <TableCell className="whitespace-nowrap">
                     {word.updatedAt
                       ? formatDateTime(word.updatedAt, {
